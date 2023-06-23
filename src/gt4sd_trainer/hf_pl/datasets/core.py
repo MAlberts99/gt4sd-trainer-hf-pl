@@ -312,7 +312,12 @@ class CGMDataModule(DataModule):
                 for x in targets["input_ids"]
             ]
 
+
         data_inputs["labels"] = targets["input_ids"]
+
+        # Allow use of PreTrainedTokenizerFast -> drop token_type_ids
+        if 'token_type_ids' in data_inputs:
+            data_inputs.pop('token_type_ids')
 
         return BatchEncoding(data=data_inputs)
 
